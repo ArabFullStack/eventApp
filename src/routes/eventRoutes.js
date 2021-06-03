@@ -8,15 +8,15 @@ router.post('/events', eventCtrl.createNewEvent)
 router.get('/events', eventCtrl.fetchEvents)
                 
                 
-router.get('/books/:id', eventCtrl.fetchSingleEvent)
+router.get('/events/:id', eventCtrl.fetchSingleEvent)
                 
                 
-router.get('/books/:id', eventCtrl.fetchSingleEvent)
+router.get('/events/:id', eventCtrl.fetchSingleEvent)
                 
                 
-router.put('/books/:id', eventCtrl.updateSingleEvent)
+router.put('/events/:id', eventCtrl.updateSingleEvent)
             
                 
-router.delete('/books/:id', eventCtrl.deleteSingleEvent)
+router.delete('/events/:id', eventCtrl.deleteSingleEvent)
 
 module.exports = router;

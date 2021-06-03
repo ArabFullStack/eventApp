@@ -1,4 +1,6 @@
 const Event = require('../models/event')
+
+
 exports.createNewEvent = function(req,res) {
     console.log(req.query)
     Event.create({
