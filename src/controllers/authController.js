@@ -40,7 +40,8 @@ exports.registerNewUser = (req, res) => {
                                  id: newUser._id,
                                 email: newUser.email,
                                 firstName: newUser.firstName,
-                                lastName: newUser.lastName       
+                                lastName: newUser.lastName,
+                                role: newUser.role       
                             }, secret, {expiresIn: expiry}, (err, token) => {
                                 if (err) {
                                     return res.status(500).json({err})
@@ -59,7 +60,7 @@ exports.registerNewUser = (req, res) => {
 }
 
 exports.loginUser = (req, res) => {  ///check if user exists
-    User.findOne({User: req.body.email} , (err, foundUser) => {
+    User.findOne({email: req.body.email} , (err, foundUser) => {
         if (err) {
             return res.status(500).json({err})
         }
@@ -75,7 +76,8 @@ exports.loginUser = (req, res) => {  ///check if user exists
             id: foundUser._id,
             email: foundUser.email,
             firstName: foundUser.firstName,
-            lastName: foundUser.lastName
+            lastName: foundUser.lastName,
+            role: foundUser.role
         }, secret, {
             expiresIn: expiry
         }, (err, token) => {
