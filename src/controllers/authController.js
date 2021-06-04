@@ -1,8 +1,6 @@
 const User = require('/models/user');
 const bcrypt = require('bcrypt.js');
-const jwt = require('jsonwebtoken');
-const secret = 'extremeSecureSECRET';
-const expiry = 3600;
+const {createToken} = require('../services/jwtServices')
 
 exports.registerNewUser = (req, res) => {        
     User.findOne({email: req.body.email}, (err, existingUser) => {
@@ -35,20 +33,13 @@ exports.registerNewUser = (req, res) => {
                             return res.status(500).json({err})                  
                         }
 
-                        jwt.sign(                                    
-                            {
-                                 id: newUser._id,
-                                email: newUser.email,
-                                firstName: newUser.firstName,
-                                lastName: newUser.lastName,
-                                role: newUser.role       
-                            }, secret, {expiresIn: expiry}, (err, token) => {
-                                if (err) {
-                                    return res.status(500).json({err})
-                                }
-                                return res.status(200).json({                  
-                                    message: "user sign up successful",
-                                    token
+                        let token = createToken(newUser);
+                        if (!token) {
+                            return res.status(500).json({message: "authentication failed! Try again"})
+                        }
+                        return res.status(200).json({                  
+                            message: "user sign up successful",
+                            token
                                 })
                             })    
                         
@@ -56,7 +47,6 @@ exports.registerNewUser = (req, res) => {
             })
         })
     })
-})
 }
 
 exports.loginUser = (req, res) => {  ///check if user exists
@@ -72,24 +62,14 @@ exports.loginUser = (req, res) => {  ///check if user exists
         if (!match) {
             return res.status(401).json({message: "Incorrect password"})
         }
-        jwt.sign({
-            id: foundUser._id,
-            email: foundUser.email,
-            firstName: foundUser.firstName,
-            lastName: foundUser.lastName,
-            role: foundUser.role
-        }, secret, {
-            expiresIn: expiry
-        }, (err, token) => {
-            if (err) {
-                return res.status(500).json({err})
-            }
-            return res.status(200).json({
-                message: "User successfully logged in",
-                token
+        let token = createToken(foundUser);
+        if (!token) {
+            return res.status(500).json({message: "authentication failed! Try login again"})
+        }
+        return res.status(200).json({
+            message: "User successfully logged in",
+            token
             })
 
         })
-                
-    })
 }

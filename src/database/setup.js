@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const connectionString = `mongodb+srv://Arab:Redlobster123.@cluster0.3wsaf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const connectionString = process.env.DB_URL;
 
 module.exports = function(){
     mongoose.connect(connectionString, {
