@@ -11,6 +11,10 @@ const eventSchema = new mongoose.Schema({
         type: String,
         enum: ["business", "casual","party", "general"]
     },
+    image:{
+        imageUrl: String,
+        enum: ["business", "casual","party", "general"]
+    },
     cost: Number,
     imageUrl: String,
     tags: Array, 
