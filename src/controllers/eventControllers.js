@@ -1,17 +1,30 @@
 const Event = require('../models/event')
-
+const request = require('request');
 
 exports.createNewEvent = function(req,res) {
     console.log(req.query)
     Event.create({
-        ...req.body
-   }, (err, newEvent) => {
-       if (err) {
-            return res.status(500).json({message: err})
-       }else {
-           return res.status(200).json({message: "new event created", newEvent})
-      }
-   })   
+        ...req.body      
+        }, (err, events) => {
+            if (err) {
+                return res.status(500).json({message: err});
+            }else {
+                request(`https://imagegen.herokuapp.com/?category=${events.category}`, {json:true}, (err,response,body) => {
+                    if (err) {
+                        return res.status(500).json({message: err});
+                    } 
+                    events.image = body.image;
+                    events.save((err, savedEvent) => {
+                        if (err) {
+                            return res.status(500).json({message: err});
+                        }
+                        return res.status(200).json({message: "Event successfully created", savedEvent})
+
+                    })              
+            })            
+        }
+
+        })                                                                        
 }
 
 exports.fetchEvents = (req,res) => {  
@@ -84,3 +97,5 @@ exports.deleteSingleEvent = (req,res) => {
      })    
                 
 }
+
+

@@ -5,7 +5,8 @@ module.exports = function(){
     mongoose.connect(connectionString, {
         useNewUrlParser: true, 
         useUnifiedTopology: true,
-        useFindAndModify: false
+        useFindAndModify: false,
+        useCreateIndex: true
     }, (err) => {
         if (err) {
             console.log(err)

@@ -5,7 +5,7 @@ exports.authenticateUser = (req,res,next) => {
         return res.status(401).json({message: "authorization header reaquired"})
     }
     let splittedHeader = req.headers.authorization.split(' ');
-    console.log(splittedHeader)
+    
     if (splittedHeader[0] !== "Bearer") {
         return res.status(401).json({message: "authorization format is Bearer <token>"})
     } 

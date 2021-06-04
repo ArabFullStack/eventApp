@@ -1,5 +1,5 @@
-const User = require('/models/user');
-const bcrypt = require('bcrypt.js');
+const User = require('../models/users');
+const bcrypt = require('bcryptjs');
 const {createToken} = require('../services/jwtServices')
 
 exports.registerNewUser = (req, res) => {        

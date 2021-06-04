@@ -1,5 +1,5 @@
-const User = require('../models/user');
-const bcrypt = require('bcrypt.js');
+const User = require('../models/users');
+const bcrypt = require('bcryptjs');
 let password = "levels22";
 
 exports.seedAdmin = () => {

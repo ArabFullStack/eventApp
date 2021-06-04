@@ -1,16 +1,15 @@
 const express = require('express');
-const request = require('request');
 const router = express.Router()
 const eventCtrl = require('../controllers/eventControllers');
 const {authenticateUser, checkIfAdmin} =  require('../middlewares/authentication.js')
 
 
-router.post('/events',authenticateUser, checkIfAdmin, eventCtrl.createNewEvent)
+router.post('/events',authenticateUser, eventCtrl.createNewEvent)
                 
-router.get('/events', authenticateUser, checkIfAdmin, eventCtrl.fetchEvents)
+router.get('/events', authenticateUser, eventCtrl.fetchEvents)
                 
                 
-router.get('/events/:id', authenticateUser, checkIfAdmin, eventCtrl.fetchSingleEvent)
+router.get('/events/:id', authenticateUser, eventCtrl.fetchSingleEvent)
                 
                 
 router.get('/events/:id', authenticateUser, eventCtrl.fetchSingleEvent)
